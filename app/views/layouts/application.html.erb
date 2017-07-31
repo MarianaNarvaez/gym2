@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html> 
+  <head>
+    <title>Gym</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <div class="navbar">
+    <li>
+      <%= link_to "Inicio", welcome_index_path%>
+      <% if user_signed_in? %>
+    </li>  
+  	  <li>
+      <li>
+        <%= link_to "Mis imagenes", 
+        images_index_path%>
+      </li>
+        <%= link_to "Cerrar sesión",  destroy_user_session_path , method: :delete %>
+      </li>   
+    <%else%>
+      <li>
+  		  <%= link_to "Iniciar sesión", new_user_session_path%>	
+      </li>   
+      <li>  
+  		<%= link_to "Registrarse", new_user_registration_path%>
+      </li> 
+      <li>
+      <%= link_to "Contenido publico", images_index_path%>
+      </li>  
+    <%end%>
+  </div>
+
+  <body>
+    
+    <%= yield %>
+  </body>
+</html>

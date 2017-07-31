@@ -1,0 +1,13 @@
+<h1><%= name%> imagen</h1> 
+<%= form_for(@image) do |f|%>
+	<% @image.errors.full_messages.each do |message|%>
+		*<%= message %>
+	<%end%>
+	<%= f.text_field :nombre, placeholder: "Nombre" %>
+	<%= f.text_field :ubicacion, placeholder: "Ubicacion"%> 
+	<%= f.text_field :fecha, placeholder: "Fecha"%> 
+	<%= f.text_field :autor, placeholder: "Autor"%> 
+	<%= f.text_field :peso, placeholder: "Peso"%> 
+
+	<%= f.submit "Guardar"%>
+<%end%>

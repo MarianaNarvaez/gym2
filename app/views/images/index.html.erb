@@ -1,0 +1,24 @@
+<%= form_tag(images_path, :method => "get", id: "search-form") do %>
+<%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
+<%= submit_tag "Search" %>
+<% end %>
+
+<% if user_signed_in? %>
+	<h1><%= current_user.email%></h1>
+	<%= link_to "Agregar imagen", new_image_path%>	
+	<% @images.each do |image|%>
+		<% if current_user.id ==  image.user_id %>
+			<h2><%= image.nombre%></h2>
+			<p><%=  image.ubicacion%></p>
+			<p><%=  image.autor%></p>
+			<h3><%= link_to "ver", image_path(image) %> </h3>
+		<% end %>
+  	<%end%> 
+  	<%else%>
+  	<% @images.each do |image|%>
+  		<h2><%= image.nombre%></h2>
+  	<% end %>
+<%end%>
+
+
+

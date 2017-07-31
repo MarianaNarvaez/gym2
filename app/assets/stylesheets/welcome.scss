@@ -1,0 +1,32 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.navbar {
+	margin: 0px;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 1.7em !important;
+    opacity:0.9;
+    display: flex;
+	justify-content: space-around;
+}
+
+.navbar li a, .navbar .navbar-brand { 
+    color: #ffffff !important;
+    display: inline-block;
+}
+
+li {
+display: inline-block;
+}
+
+.gym {
+	position: relative;
+	left: 5%;
+}
+
+.fondoindex{
+
+}
+
