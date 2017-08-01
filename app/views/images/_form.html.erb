@@ -3,11 +3,29 @@
 	<% @image.errors.full_messages.each do |message|%>
 		*<%= message %>
 	<%end%>
-	<%= f.text_field :nombre, placeholder: "Nombre" %>
-	<%= f.text_field :ubicacion, placeholder: "Ubicacion"%> 
-	<%= f.text_field :fecha, placeholder: "Fecha"%> 
-	<%= f.text_field :autor, placeholder: "Autor"%> 
-	<%= f.text_field :peso, placeholder: "Peso"%> 
+	<div class="field">
+		<%= f.text_field :nombre, placeholder: "Nombre" %>
+	</div>
+	<div class="field">
+		<%= f.text_field :ubicacion, placeholder: "Ubicacion"%> 
+	</div>
+	<div class="field">	
+		<%= f.text_field :fecha, placeholder: "Fecha"%> 
+	</div>	
+	<div class="field">
+		<%= f.text_field :autor, placeholder: "Autor"%> 
+	</div>	
+	<div class="field">
+		<%= f.text_field :peso, placeholder: "Peso"%>
+	</div>
+	<div class="field">
+		<label>Usuarios para compartir</label>
+		<% @users.each do |user|%>
+		<div class="field">
+	 		<%= check_box_tag "users[]", user.id%> <%=user.email %>
+	 	</div>	
+		<%end%> 
+	</div>	
 
 	<%= f.submit "Guardar"%>
 <%end%>

@@ -17,12 +17,14 @@ class ImagesController < ApplicationController
 	#GET
 	def new
 		@image = Image.new
+		#
+		@users = User.all
 	end
 
 	#POST
 	def create
 		@image = current_user.images.new(image_params)
-
+		@image.users = params[:users]
 		if @image.save
 			redirect_to @image
 		else
@@ -54,6 +56,6 @@ class ImagesController < ApplicationController
 	private
 
 	def image_params
-		params.require(:image).permit(:nombre,:ubicacion,:fecha,:autor, :peso)
+		params.require(:image).permit(:nombre,:ubicacion,:fecha,:autor, :peso, :users)
 	end
 end
