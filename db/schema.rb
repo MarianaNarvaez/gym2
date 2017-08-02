@@ -12,16 +12,19 @@
 
 ActiveRecord::Schema.define(version: 20170801224138) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "has_categories", force: :cascade do |t|
-    t.integer "image_id"
-    t.integer "user_id"
+    t.bigint "image_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["image_id"], name: "index_has_categories_on_image_id"
     t.index ["user_id"], name: "index_has_categories_on_user_id"
   end
 
-  create_table "images", force: :cascade do |t|
+  create_table "images", id: :serial, force: :cascade do |t|
     t.string "nombre"
     t.string "ubicacion"
     t.string "fecha"
@@ -29,11 +32,11 @@ ActiveRecord::Schema.define(version: 20170801224138) do
     t.string "peso"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -50,4 +53,7 @@ ActiveRecord::Schema.define(version: 20170801224138) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "has_categories", "images"
+  add_foreign_key "has_categories", "users"
+  add_foreign_key "images", "users"
 end
