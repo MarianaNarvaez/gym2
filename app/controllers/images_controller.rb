@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-	#GET
+	#GET 
 	def index
   		@images = Image.all
   		if params[:search]

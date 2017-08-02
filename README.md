@@ -1,8 +1,8 @@
-GYM
+#GYM
 
-By: Mariana Narvaez - mnarvae3@eafit.educo
+##By: Mariana Narvaez - mnarvae3@eafit.educo
 
-1. Descripción de aplicación
+#1. Descripción de aplicación
 
 Aplicación web que permite gestionar imagenes.
 
@@ -17,7 +17,7 @@ Aplicación del patron MVC a una aplicación Web
 Uso de un framework backend moderno -> Rails
 Configuración de ambientes: Desarrollo, Pruebas y Producción.
 
-2. Análisis
+#2. Análisis
 
 2.1 Requisitos funcionales:
 
@@ -94,30 +94,46 @@ article:
 }
 3.2 Servicios Web
 
-/* Servicio Web: Inserta un registro de Articulo en la Base de datos
+/* Servicio Web: Consulta las imagenes del usuario logeado
+  Método: GET
+  URI: /images/index
+*/
+
+/* Servicio Web: Guarda imagenes en la base de datos
   Método: POST
-  URI: /newarticle
+  URI: /images/
 */
 
-/* Servicio Web: Realiza la búsqueda en la base de datos, por campo titulo
+/* Servicio Web: Expone la vista para crear una nueva imagen
   Método: GET
-  URI: /findbytitle?title=val
+  URI: /images/new
 */
 
-/* Servicio Web: Realiza la búsqueda en la base de datos de todos los articulos
+/* Servicio Web: Expone la vista para editar una nueva imagen
   Método: GET
-  URI: /articles
+  URI: /images/:id
 */
 
-/* Servicio Web: Borra un Articulo de la Base de datos.
-  Método: GET
-  URI: /delarticle?id=val
- */
+/* Servicio Web: Actualiza los registros de las imagenes en la base de datos.
+   Método: PUT
+   URI: /images/:id
+*/
 
- /* Servicio Web: Borra un Articulo de la Base de datos.
+/* Servicio Web: Actualiza los registros de las imagenes en la base de datos.
+   Método: PUT
+   URI: /images/:id
+*/
+
+/* Servicio Web: Borra los registros de las imagenes de la base de datos.
    Método: DELETE
-   URI: /delarticle/id
-  */
+   URI: /images/:id
+*/
+
+/* Servicio Web: Expone la vista para logear un usuario
+   Método: GET
+   URI: /users/sign_in
+*/
+
 4. Desarrollo:
 
 5. Implementación o Despliegue (DCA y PaaS):
