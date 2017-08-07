@@ -1,23 +1,32 @@
-<%= form_tag(images_path, :method => "get", id: "search-form") do %>
-<%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
-<%= submit_tag "Search" %>
+<%= form_tag(images_path, :method => "get", id: "search-form") do %> 
+<%= text_field_tag :search, params[:search], placeholder: "Buscar Imagen", class:"camposearch" %>
+<%= submit_tag "Search", class:"botonsearch" %>
 <% end %>
-
 <% if user_signed_in? %>
-	<h1><%= current_user.email%></h1>
-	<%= link_to "Agregar imagen", new_image_path%>	
+	<h1 class="usuario"><%= current_user.email%></h1>
+	<%= link_to "Agregar imagen", new_image_path, class:"agregarimagen"%>
+	<div class="fotos">
+	<div class="row">	
 	<% @images.each do |image|%>
-		<% if current_user.id ==  image.user_id %>
+		<% if current_user.id ==  image.user_id || image.peso == 'si'%>
+			<div class="col-sm-4 ancho">
 			<h2><%= image.nombre%></h2>
 			<p><%=  image.ubicacion%></p>
 			<p><%=  image.autor%></p>
 			<h3><%= link_to "ver", image_path(image) %> </h3>
+			</div>	
 		<% end %>
   	<%end%> 
   	<%else%>
+  	<div class="fotos">
+	<div class="row">
   	<% @images.each do |image|%>
-  		<h2><%= image.nombre%></h2>
+  		<div class="col-sm-4 ancho">
+  			<h2><%= image.nombre%></h2>
+  		</div>	
   	<% end %>
+  	</div>
+  	</div>
 <%end%>
 
 

@@ -10,19 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801224138) do
+ActiveRecord::Schema.define(version: 20170807051119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "has_categories", force: :cascade do |t|
-    t.bigint "image_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["image_id"], name: "index_has_categories_on_image_id"
-    t.index ["user_id"], name: "index_has_categories_on_user_id"
-  end
 
   create_table "images", id: :serial, force: :cascade do |t|
     t.string "nombre"
@@ -33,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170801224138) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.integer "compartido"
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
@@ -53,7 +45,5 @@ ActiveRecord::Schema.define(version: 20170801224138) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "has_categories", "images"
-  add_foreign_key "has_categories", "users"
   add_foreign_key "images", "users"
 end

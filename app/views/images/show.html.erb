@@ -1,13 +1,17 @@
 <% unless @image.user.nil? %>
-	<h1><%= @image.user.email%></h1>
+	<h1 class="usuario"><%= @image.user.email%></h1>
 <%end%>
+<div class="showimagen">
+	<h2><%= @image.nombre%></h2>
+	<p><%=  @image.ubicacion%></p>
+	<p><%=  @image.fecha%></p>
+	<p><%=  @image.autor%></p>
+	<p><%=  @image.peso%></p>
+</div>
+<div class="eliminareditar">
+	<%= link_to "Eliminar", @image, method: :delete%>
+	<%= link_to "Editar", edit_image_path() %>
+</div>
 
-<h2><%= @image.nombre%></h2>
-<p><%=  @image.ubicacion%></p>
-<p><%=  @image.fecha%></p>
-<p><%=  @image.autor%></p>
-<p><%=  @image.peso%></p>
 
 
-<%= link_to "Eliminar", @image, method: :delete%>
-<%= link_to "Editar", edit_image_path() %>

@@ -18,13 +18,13 @@ class ImagesController < ApplicationController
 	def new
 		@image = Image.new
 		#
-		@users = User.all
+		#@users = User.all
 	end
 
 	#POST
 	def create
 		@image = current_user.images.new(image_params)
-		@image.users = params[:users]
+		#@image.users = params[:users]
 		if @image.save
 			redirect_to @image
 		else
@@ -36,7 +36,7 @@ class ImagesController < ApplicationController
 	def destroy
 		@image = Image.find(params[:id])
 		@image.destroy
-		redirect_to image_path 
+		redirect_to images_index_path 
 	end
 
 	def edit

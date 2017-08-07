@@ -1,31 +1,26 @@
-<h1><%= name%> imagen</h1> 
+<div class="crearimagen">
+<h1><%= name%> imagen</h1>
+<br>
 <%= form_for(@image) do |f|%>
 	<% @image.errors.full_messages.each do |message|%>
 		*<%= message %>
 	<%end%>
-	<div class="field">
-		<%= f.text_field :nombre, placeholder: "Nombre" %>
+	<div class="field ">
+		<%= f.text_field :nombre, placeholder: "Nombre", autofocus: true, class:"campocrear" %>
 	</div>
-	<div class="field">
-		<%= f.text_field :ubicacion, placeholder: "Ubicacion"%> 
+	<div class="field ">
+		<%= f.text_field :ubicacion, placeholder: "Ubicacion", autofocus: true, class:"campocrear"%> 
 	</div>
-	<div class="field">	
-		<%= f.text_field :fecha, placeholder: "Fecha"%> 
+	<div class="field ">	
+		<%= f.text_field :fecha, placeholder: "Fecha", autofocus: true, class:"campocrear"%> 
+	</div>	
+	<div class="field ">
+		<%= f.text_field :autor, placeholder: "Autor", autofocus: true, class:"campocrear"%> 
 	</div>	
 	<div class="field">
-		<%= f.text_field :autor, placeholder: "Autor"%> 
-	</div>	
-	<div class="field">
-		<%= f.text_field :peso, placeholder: "Peso"%>
+		<%= f.text_field :peso, placeholder: "Compartir (Escriba si o no)", autofocus: true, class:"campocrear"%>
 	</div>
-	<div class="field">
-		<label>Usuarios para compartir</label>
-		<% @users.each do |user|%>
-		<div class="field">
-	 		<%= check_box_tag "users[]", user.id%> <%=user.email %>
-	 	</div>	
-		<%end%> 
-	</div>	
-
-	<%= f.submit "Guardar"%>
+	<br> 
+	<%= f.submit "Guardar", class:"botonguardar"%>
 <%end%>
+</div>
