@@ -1,37 +1,29 @@
-#GYM
+#GYM  
 
 ##By: Mariana Narvaez - mnarvae3@eafit.educo
 
 #1. Descripción de aplicación
 
-Aplicación web que permite gestionar imagenes.
+Esta aplicación esta orientada a personas que practican actividades físicas, permitiendo a los diferentes usuarios logearse, subir y compartir imágenes que muestren el progreso que han tenido mientras realizan determinado ejercicio con el fin de motivar tanto a otras personas como a ellos mismos para seguir trabajando en su entrenamiento personal para asi mejorar su salud, autoestima, físico y energía.
 
-Se generó la base, con rails http://rubyonrails.org/
+la aplicación esta construida con el patron MVC. Utiliza un framework backend moderno -> Rails que permite logear usuarios, crear, editar, borrar imagenes, compartir y buscar contenido.
 
-$ gym rails
-(este generador, crea una app base ejemplo MVC para gestión de imagenes)
-
-Aplicación para gestionar usuarios e imagenes de un gimnasio, que cubre:
-
-Aplicación del patron MVC a una aplicación Web
-Uso de un framework backend moderno -> Rails
 Configuración de ambientes: Desarrollo, Pruebas y Producción.
 
 #2. Análisis
 
-2.1 Requisitos funcionales:
+##2.1 Requisitos funcionales:
 
-Crear Articulo.
 *Registro de usuarios por medio del correo electronico y contraseña
 *Login de usuarios por medio del correo electronico y contraseña
-*Visualizacion de contenido propio al iniciar sesión.
+*Visualizacion de contenido propio al iniciar sesió.
 *Buscar contenido por nombre, ubicacion o autor al estar logeado.
 *Actualizar contenido.
 *Borrar Contenido.
 *Compartir contenido.
 *Visualizar contenido publico
 
-2.2 Definición de tecnología de desarrollo y ejecución para la aplicación:
+##2.2 Definición de tecnología de desarrollo y ejecución para la aplicación:
 
 *Lenguaje de Programación: Ruby 2.4.1
 *Framework web backend: Rails 5.1.1
@@ -40,59 +32,222 @@ Crear Articulo.
 *Web App Server: Puma
 *Web Server: Apache web server
 
-Ambiente de Desarrollo, Pruebas y Producción:
+#3.Ambiente de Desarrollo, Pruebas y Producción:
 
-Desarrollo:
+Para que los 3 ambientes funcionen correctamente se reealizaron las siguientes modificaciones en config/database.yml
 
-*Sistema Operativo: Ubuntu 16.04
-*Lenguaje de Programación: Ruby 2.4.1
-*Framework web backend: Rails 5.1.1
-*Framework web frontend: no se usa - se utilizará *Templates HTML para Vista (V)
-*Base de datos: Sqlite3
-*Editor: Sublime
-*GIT (CLI Y GUI): Git source tree 2.7.4 
-*Pruebas: Postman
+default: &default
+  adapter: postgresql
+  pool: 5
+  username: mari
+  password: 9611
+  host: localhost
+  port: 5432
 
-Pruebas
-en el DCA:
+development:
+  database: mari
+  adapter: postgresql
+  pool: 5
+  username: mari
+  password: 9611
+  host: localhost
 
-se instala nvm local para el usuario
-source: https://www.liquidweb.com/kb/how-to-install-nvm-node-version-manager-for-node-js-on-centos-7/
+test:
+  database: mari
+  adapter: postgresql
+  pool: 5
+  username: mari
+  password: 9611
+  host: localhost
+  port: 5432
 
-se instala la version de node:
+production:
+  database: mari
+  adapter: postgresql
+  pool: 5
+  username: mari
+  password: 9611
+  host: localhost
+  port: 5432
 
-$ nvm install v7.7.4
+##3.1 Desarrollo
 
-se instala el servidor mongodb
+Se generó la base MVC, con rails:
 
-como root:
+$rails new gym
 
-# yum install mongodb-server -y
-ponerlo a correr:
+Generación de controladores para pagina de inicio e imagenes:
 
-# systemctl enable mongod
-# systemctl start mongod
-lo instala de los repositorios propios de Centos.
+$rails generate controller welcome index
+$rails generate controller images index
 
-tambien lo puede instalar de un repo de mongodb:
+Generación de modelos
+$rails generate model Image nombre:string ubicacion:string fecha:string autor:string peso:string
 
-ver pág: https://www.liquidweb.com/kb/how-to-install-mongodb-on-centos-7/
+$rake db:migrate
 
-Produccion:
+Creaacion de vistas para controller images en view images
+new file _form.htm.erb
+new file edit.htm.erb
+new file new.htm.erb
+new file show.htm.erb
+
+Gestion de usuarios
+En Gemfile:
+gem 'devise', '~> 4.2'
+
+$bundle install
+$rails g devise:install
+$rails g devise User
+$rails g devise:views
+
+Realización de search
+
+En images_controlles.rb
+
+  def index
+      @images = Image.all
+      if params[:search]
+        @images = Image.search(params[:search])
+      else
+        @images = Image.all.order('created_at DESC')
+      end
+  end 
+
+En image.rb
+
+  def self.search(search)
+      where("nombre || ubicacion || autor LIKE ?", "%#{search}%")
+  end 
+
+En views/image/index.html.erb
+
+<%= form_tag(images_path, :method => "get", id: "search-form") do %> 
+<%= text_field_tag :search, params[:search], placeholder: "Buscar Imagen", class:"camposearch" %>
+<%= submit_tag "Search", class:"botonsearch" %>
+<% end %>
+
+Definicion de rutas en config routes.rb
+
+  get 'images/index'
+
+  resources :images
+  
+  devise_for :users
+  get 'welcome/index'
+  root 'welcome#index'
+
+  scope '/marigym' do
+    get 'welcome/index'
+    resources :images
+    root 'welcome#index'
+  end
+
+##3.2 Pruebas en el DCA
+conectarse al servidor:
+ssh user1@10.131.137.180
+password: ******
+
+Agregar un nuevo usuario:
+sudo adduser mnarvae3
+Darle permisos de supersusuario en el archivo sudoers
+
+Preparación del ambiente: 
+
+*Instalar rvm
+mnarvae3@10.131.137.180$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+mnarvae3@10.131.137.180$ \curl -sSL https://get.rvm.io | bash
+
+*Intalar ruby
+mnarvae3@10.131.137.180$ rvm install 2.4.1
+
+*Instalar rails
+mnarvae3@10.131.137.180$ gem install rails
+
+*Instalar postgresql
+mnarvae3@10.131.137.180$ sudo yum install -y postgresql-server postgresql-contrib postgresql-devel
+mnarvae3@10.131.137.180$ sudo postgresql-setup initdb
+
+Crear usuario, password y base de datos
+#createuser --mari
+#psql
+#postgres=# \password mari
+#Enter new password: ******
+#postgres=# \q
+#exit
+#sudo -u mari psql
+#createdb mari_dca
+
+*Clonar repositorio
+mnarvae3@10.131.137.180$git clone https://github.com/MarianaNarvaez/gym2.git
+
+*Seguir los siguientes pasos
+https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/apache/oss/el7/deploy_app.html
 
 
-3. Diseño:
+##3.3 Producción
 
-3.1 Modelo de datos:
+El despliegue se realizo en heroku para ello se llevaron a cabo los siguientes pasos:
 
-article:
+1. Creacion de cuenta en heroku.com
+2. Instalar postgresql
+#sudo apt-get update
+#sudo apt-get install postgresql postgresql-contrib
+3. Crear usuario, password y base de datos en postgresql
+#createuser --mari
+#psql
+#postgres=# \password mari
+#Enter new password: 123456
+#postgres=# \q
+#exit
+#sudo -u mari psql
+#createdb mari
+4.Hacer el deploy en heroku:
+//instalar heroku
+#-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+//hacer commit
+#git commit -m "subiend el log"
+//Precompilar assets
+#rake assets:precompile
+#git commit -m "con assets"
+//logearse en heroku
+heroku login
+//Crear sitio para deploy
+#heroku create
+//Hacer push
+#git push heroku master
+//Realizar migracion
+#heroku run rake db:migrate
+#heroku open
+//Renombrar direccion
+#heroku rename marigym
+
+https://marigym.herokuapp.com/
+
+#4. Diseño:
+
+##4.1 Modelo de datos:
+
+Image:
 
 {
-    title: String,
-    url: String,
-    text: String
+    nombre: String,
+    ubicacion: String,
+    fecha: String,
+    autor: String,
+    peso: String,
+    user: integer
 }
-3.2 Servicios Web
+
+User:
+
+{
+    email: String,
+    password: String,
+
+}
+
+##4.2 Servicios Web
 
 /* Servicio Web: Consulta las imagenes del usuario logeado
   Método: GET
@@ -101,7 +256,7 @@ article:
 
 /* Servicio Web: Guarda imagenes en la base de datos
   Método: POST
-  URI: /images/
+  URI: /images?nombre=foto1&ubicacion=medellin&fecha=12032017&compartir=si
 */
 
 /* Servicio Web: Expone la vista para crear una nueva imagen
@@ -116,12 +271,7 @@ article:
 
 /* Servicio Web: Actualiza los registros de las imagenes en la base de datos.
    Método: PUT
-   URI: /images/:id
-*/
-
-/* Servicio Web: Actualiza los registros de las imagenes en la base de datos.
-   Método: PUT
-   URI: /images/:id
+   URI: /images/:id?nombre=otronombre
 */
 
 /* Servicio Web: Borra los registros de las imagenes de la base de datos.
@@ -134,45 +284,27 @@ article:
    URI: /users/sign_in
 */
 
-4. Desarrollo:
+/* Servicio Web: Realiza el login
+   Método: POST
+   URI: /users/sign_in?email=mari@gmail.com&password=123456
+*/
 
-5. Implementación o Despliegue (DCA y PaaS):
+/* Servicio Web: destruye la sesion iniciada
+   Método: DELETE
+   URI: /users/sign_out
+*/
 
-5.1 despliegue en el data center academico (DCA):
+/* Servicio Web: Muestra la vista para hacer el registro de un usuario
+   Método: GET
+   URI: /users/sign_up
+*/
 
-se instala un manejador de procesos de nodejs, se instala: PM2 (http://pm2.keymetrics.io/)
+/* Servicio Web: Guarda el registro del nuevo usurio en la base de datos
+   Método: POST
+   URI: /users?email=micorreco@hotmail.com&password=123456
+*/
 
-emontoya$ npm install -g pm2
-emontoya$ cd articulosEM
-emontoya$ pm2 start app.ps
-emontoya$ pm2 list
-ponerlo como un servicio, para cuando baje y suba el sistema:
-
-emontoya$ pm2 startup systemd
-abrir los puertos en el firewall que utilizara la app:
-
-# firewall-cmd --zone=public --add-port=3000/tcp --permanent
-# firewall-cmd --reload
-# firewall-cmd --list-all
-como medida desesperada, puede parar y desactivar el firewalld, cosa que no es recomendable:
-
-# systemctl stop firewalld   
-# systemctl disable firewalld
-# systemctl start firewalld
-Instalar NGINX:
-
-# yum install -y nginx
-
-# systemctl enable nginx
-# systemctl start nginx
-Abrir el puerto 80
-
-# firewall-cmd --zone=public --add-port=80/tcp --permanent
-# firewall-cmd --reload
-MUY MUY IMPORTANTE: Deshabilitar SELINUX
-
-# vim /etc/sysconfig/selinux
-
-      SELINUX=disabled
-      
-# reboot
+/* Servicio Web: Obtiene la vista inicial de la aplicación
+   Método: GET
+   URI: /welcome/index
+*/
