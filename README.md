@@ -1,38 +1,38 @@
-#GYM  
+# GYM  
 
-##By: Mariana Narvaez - mnarvae3@eafit.educo
+## By: Mariana Narvaez - mnarvae3@eafit.educo
 
-#1. Descripción de aplicación
+# 1.Descripción de aplicación
 
-Esta aplicación esta orientada a personas que practican actividades físicas, permitiendo a los diferentes usuarios logearse, subir y compartir imágenes que muestren el progreso que han tenido mientras realizan determinado ejercicio con el fin de motivar tanto a otras personas como a ellos mismos para seguir trabajando en su entrenamiento personal para asi mejorar su salud, autoestima, físico y energía.
+	Esta aplicación esta orientada a personas que practican actividades físicas, permitiendo a los diferentes usuarios logearse, subir y compartir imágenes que muestren el progreso que han tenido mientras realizan determinado ejercicio con el fin de motivar tanto a otras personas como a ellos mismos para seguir trabajando en su entrenamiento personal para asi mejorar su salud, autoestima, físico y energía.
 
-la aplicación esta construida con el patron MVC. Utiliza un framework backend moderno -> Rails que permite logear usuarios, crear, editar, borrar imagenes, compartir y buscar contenido.
+	la aplicación esta construida con el patron MVC. Utiliza un framework backend moderno -> Rails que permite logear usuarios, crear, editar, borrar imagenes, compartir y buscar contenido.
 
 Configuración de ambientes: Desarrollo, Pruebas y Producción.
 
-#2. Análisis
+# 2. Análisis
 
-##2.1 Requisitos funcionales:
+## 2.1 Requisitos funcionales:
 
-*Registro de usuarios por medio del correo electronico y contraseña
-*Login de usuarios por medio del correo electronico y contraseña
-*Visualizacion de contenido propio al iniciar sesió.
-*Buscar contenido por nombre, ubicacion o autor al estar logeado.
-*Actualizar contenido.
-*Borrar Contenido.
-*Compartir contenido.
-*Visualizar contenido publico
+	* Registro de usuarios por medio del correo electronico y contraseña
+	* Login de usuarios por medio del correo electronico y contraseña
+	* Visualizacion de contenido propio al iniciar sesió.
+	* Buscar contenido por nombre, ubicacion o autor al estar logeado.
+	* Actualizar contenido.
+	* Borrar Contenido.
+	* Compartir contenido.
+	* Visualizar contenido publico
 
-##2.2 Definición de tecnología de desarrollo y ejecución para la aplicación:
+## 2.2 Definición de tecnología de desarrollo y ejecución para la aplicación:
 
-*Lenguaje de Programación: Ruby 2.4.1
-*Framework web backend: Rails 5.1.1
-*Framework web frontend: no se usa - se utilizará *Templates HTML para Vista (V)
-*Base de datos: Sqlite3
-*Web App Server: Puma
-*Web Server: Apache web server
+	* Lenguaje de Programación: Ruby 2.4.1
+	* Framework web backend: Rails 5.1.1
+	* Framework web frontend: no se usa - se utilizará *Templates HTML para Vista (V)
+	* Base de datos: Sqlite3
+	* Web App Server: Puma
+	* Web Server: Apache web server
 
-#3.Ambiente de Desarrollo, Pruebas y Producción:
+# 3.Ambiente de Desarrollo, Pruebas y Producción:
 
 Para que los 3 ambientes funcionen correctamente se reealizaron las siguientes modificaciones en config/database.yml
 
@@ -70,7 +70,7 @@ production:
   host: localhost
   port: 5432
 
-##3.1 Desarrollo
+## 3.1 Desarrollo
 
 Se generó la base MVC, con rails:
 
@@ -143,7 +143,7 @@ Definicion de rutas en config routes.rb
     root 'welcome#index'
   end
 
-##3.2 Pruebas en el DCA
+## 3.2 Pruebas en el DCA
 conectarse al servidor:
 ssh user1@10.131.137.180
 password: ******
@@ -158,69 +158,69 @@ Preparación del ambiente:
 mnarvae3@10.131.137.180$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 mnarvae3@10.131.137.180$ \curl -sSL https://get.rvm.io | bash
 
-*Intalar ruby
+* Intalar ruby
 mnarvae3@10.131.137.180$ rvm install 2.4.1
 
-*Instalar rails
+* Instalar rails
 mnarvae3@10.131.137.180$ gem install rails
 
-*Instalar postgresql
+* Instalar postgresql
 mnarvae3@10.131.137.180$ sudo yum install -y postgresql-server postgresql-contrib postgresql-devel
 mnarvae3@10.131.137.180$ sudo postgresql-setup initdb
 
 Crear usuario, password y base de datos
-#createuser --mari
-#psql
-#postgres=# \password mari
-#Enter new password: ******
-#postgres=# \q
-#exit
-#sudo -u mari psql
-#createdb mari_dca
+* createuser --mari
+* psql
+* postgres=# \password mari
+* Enter new password: ******
+* postgres=# \q
+* exit
+* sudo -u mari psql
+* createdb mari_dca
 
-*Clonar repositorio
+* Clonar repositorio
 mnarvae3@10.131.137.180$git clone https://github.com/MarianaNarvaez/gym2.git
 
-*Seguir los siguientes pasos
+* Seguir los siguientes pasos
 https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/apache/oss/el7/deploy_app.html
 
 
-##3.3 Producción
+ ## 3.3 Producción
 
 El despliegue se realizo en heroku para ello se llevaron a cabo los siguientes pasos:
 
 1. Creacion de cuenta en heroku.com
 2. Instalar postgresql
-#sudo apt-get update
-#sudo apt-get install postgresql postgresql-contrib
+	* sudo apt-get update
+	* sudo apt-get install postgresql postgresql-contrib
 3. Crear usuario, password y base de datos en postgresql
-#createuser --mari
-#psql
-#postgres=# \password mari
-#Enter new password: 123456
-#postgres=# \q
-#exit
-#sudo -u mari psql
-#createdb mari
-4.Hacer el deploy en heroku:
-//instalar heroku
-#-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-//hacer commit
-#git commit -m "subiend el log"
-//Precompilar assets
-#rake assets:precompile
-#git commit -m "con assets"
-//logearse en heroku
-heroku login
-//Crear sitio para deploy
-#heroku create
-//Hacer push
-#git push heroku master
-//Realizar migracion
-#heroku run rake db:migrate
-#heroku open
-//Renombrar direccion
-#heroku rename marigym
+	* createuser --mari
+	* psql
+	* postgres=# \password mari
+	* Enter new password: 123456
+	* postgres=# \q
+	* exit
+	* sudo -u mari psql
+	* createdb mari
+4. Hacer el deploy en heroku:
+  	instalar heroku
+		-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+	hacer commit
+		git commit -m "subiend el log"
+	Precompilar assets
+		rake assets:precompile
+		git commit -m "con assets"
+	logearse en heroku
+		heroku login
+	Crear sitio para deploy
+		heroku create
+	Hacer push
+		git push heroku master
+	Realizar migracion
+		heroku run rake db:migrate
+		heroku open
+	Renombrar direccion
+		heroku rename marigym
 
 https://marigym.herokuapp.com/
 
