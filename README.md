@@ -4,9 +4,8 @@
 
 # 1.Descripción de aplicación
 
-	Esta aplicación esta orientada a personas que practican actividades físicas, permitiendo a los diferentes usuarios logearse, subir y compartir imágenes que muestren el progreso que han tenido mientras realizan determinado ejercicio con el fin de motivar tanto a otras personas como a ellos mismos para seguir trabajando en su entrenamiento personal para asi mejorar su salud, autoestima, físico y energía.
-
-	la aplicación esta construida con el patron MVC. Utiliza un framework backend moderno -> Rails que permite logear usuarios, crear, editar, borrar imagenes, compartir y buscar contenido.
+Esta aplicación esta orientada a personas que practican actividades físicas, permitiendo a los diferentes usuarios logearse, subir y compartir imágenes que muestren el progreso que han tenido mientras realizan determinado ejercicio con el fin de motivar tanto a otras personas como a ellos mismos para seguir trabajando en su entrenamiento personal para asi mejorar su salud, autoestima, físico y energía.
+la aplicación esta construida con el patron MVC. Utiliza un framework backend moderno -> Rails que permite logear usuarios, crear, editar, borrar imagenes, compartir y buscar contenido.
 
 Configuración de ambientes: Desarrollo, Pruebas y Producción.
 
@@ -36,83 +35,84 @@ Configuración de ambientes: Desarrollo, Pruebas y Producción.
 
 Para que los 3 ambientes funcionen correctamente se reealizaron las siguientes modificaciones en config/database.yml
 
-default: &default
-  adapter: postgresql
-  pool: 5
-  username: mari
-  password: 9611
-  host: localhost
-  port: 5432
+	default: &default
+	  adapter: postgresql
+	  pool: 5
+	  username: mari
+	  password: 9611
+	  host: localhost
+	  port: 5432
 
-development:
-  database: mari
-  adapter: postgresql
-  pool: 5
-  username: mari
-  password: 9611
-  host: localhost
+	development:
+	  database: mari
+	  adapter: postgresql
+	  pool: 5
+	  username: mari
+	  password: 9611
+	  host: localhost
 
-test:
-  database: mari
-  adapter: postgresql
-  pool: 5
-  username: mari
-  password: 9611
-  host: localhost
-  port: 5432
+	test:
+	  database: mari
+	  adapter: postgresql
+	  pool: 5
+	  username: mari
+	  password: 9611
+	  host: localhost
+	  port: 5432
 
-production:
-  database: mari
-  adapter: postgresql
-  pool: 5
-  username: mari
-  password: 9611
-  host: localhost
-  port: 5432
+	production:
+	  database: mari
+	  adapter: postgresql
+	  pool: 5
+	  username: mari
+	  password: 9611
+	  host: localhost
+	  port: 5432
 
 ## 3.1 Desarrollo
 
 Se generó la base MVC, con rails:
 
-$rails new gym
+	$rails new gym
 
 Generación de controladores para pagina de inicio e imagenes:
 
-$rails generate controller welcome index
-$rails generate controller images index
+	$rails generate controller welcome index
+	$rails generate controller images index
 
 Generación de modelos
-$rails generate model Image nombre:string ubicacion:string fecha:string autor:string peso:string
+	$rails generate model Image nombre:string ubicacion:string fecha:string autor:string peso:string
 
-$rake db:migrate
+	$rake db:migrate
 
-Creaacion de vistas para controller images en view images
-new file _form.htm.erb
-new file edit.htm.erb
-new file new.htm.erb
-new file show.htm.erb
+Creacion de vistas para controller images en view images
+
+	new file _form.htm.erb
+	new file edit.htm.erb
+	new file new.htm.erb
+	new file show.htm.erb
 
 Gestion de usuarios
 En Gemfile:
-gem 'devise', '~> 4.2'
+	gem 'devise', '~> 4.2'
 
-$bundle install
-$rails g devise:install
-$rails g devise User
-$rails g devise:views
+	$bundle install
+	$rails g devise:install
+	$rails g devise User
+	$rails g devise:views
 
 Realización de search
 
 En images_controlles.rb
 
-  def index
-      @images = Image.all
-      if params[:search]
-        @images = Image.search(params[:search])
-      else
-        @images = Image.all.order('created_at DESC')
-      end
-  end 
+	def index
+		@images = Image.all
+		if params[:search]
+			@images = Image.search(params[:search])
+		else
+			@images = Image.all.order('created_at DESC')
+      	 	end
+       	end 
 
 En image.rb
 
