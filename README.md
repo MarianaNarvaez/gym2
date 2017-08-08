@@ -199,53 +199,61 @@ El despliegue se realizo en heroku, para ello se llevaron a cabo los siguientes 
 2. Instalar postgresql
 
 	sudo apt-get update
+	
 	sudo apt-get install postgresql postgresql-contrib
 
 3. Crear usuario, password y base de datos en postgresql
 
 	createuser --mari
+	
 	psql
+	
 	postgres=# \password mari
+	
 	Enter new password: 123456
+
 	postgres=# \q
+
 	exit
+
 	sudo -u mari psql
+
 	createdb mari
 
 4. Hacer el deploy en heroku:
 instalar heroku
 
-		-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+		$-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 hacer commit
 
-		git commit -m "subiend el log"
+		$git commit -m "subiend el log"
 
 Precompilar assets
 
-		rake assets:precompile
-		git commit -m "con assets"
+		$rake assets:precompile
+		$git commit -m "con assets"
 
 logearse en heroku
 
-		heroku login
+		$heroku login
 
 Crear sitio para deploy
 
-		heroku create
+		$heroku create
 
 Hacer push
 
-		git push heroku master
+		$git push heroku master
 
 Realizar migracion
 
-		heroku run rake db:migrate
-		heroku open
+		$heroku run rake db:migrate
+		$heroku open
 
 Renombrar direccion
 
-		heroku rename marigym
+		$heroku rename marigym
 
 https://marigym.herokuapp.com/
 
