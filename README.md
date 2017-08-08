@@ -220,6 +220,7 @@ El despliegue se realizo en heroku, para ello se llevaron a cabo los siguientes 
 
 	createdb mari
 
+
 4. Hacer el deploy en heroku:
 instalar heroku
 
